@@ -2,17 +2,16 @@ package sdeProblems;
 import java.util.*;
 
 
-class Node{
-	int data;
-	Node next;
-	Node(int d){
-		data = d;
-		next = null;
-	}
-}
-
-
 public class DeleteNthNodefromEnd {
+	class Node{
+		int data;
+		Node next;
+		Node(int d){
+			data = d;
+			next = null;
+		}
+	}
+
 	static Node head;
 	static void remove(int key) {
 		Node first = head;
