@@ -2,7 +2,7 @@ package sdeProblems;
 import java.util.*;
 
 public class IntersectionTwoLL {
-	static Node head1, head2;
+    static Node head1, head2;
 	 
     static class Node {
  
@@ -11,63 +11,22 @@ public class IntersectionTwoLL {
  
         Node(int d)
         {
-            data = d;
+            d = data;
             next = null;
         }
     }
  
     
-    int getNode()
-    {
-        int c1 = getCount(head1);
-        int c2 = getCount(head2);
-        int d;
- 
-        if (c1 > c2) {
-            d = c1 - c2;
-            return _getIntesectionNode(d, head1, head2);
-        }
-        else {
-            d = c2 - c1;
-            return _getIntesectionNode(d, head2, head1);
-        }
+    static Node intersection(Node head1,Node head2) {
+    	if(head1 == null || head2 == null) return null;
+    	Node first = head1;
+    	Node second = head2;
+    	while(first!=second) {
+    		first = first == null ? head2 : first.next;
+    		second = second == null ? head1 : second.next;
+    	}
+    	return first;
     }
- 
-    int _getIntesectionNode(int d, Node node1, Node node2)
-    {
-        int i;
-        Node current1 = node1;
-        Node current2 = node2;
-        for (i = 0; i < d; i++) {
-            if (current1 == null) {
-                return -1;
-            }
-            current1 = current1.next;
-        }
-        while (current1 != null && current2 != null) {
-            if (current1.data == current2.data) {
-                return current1.data;
-            }
-            current1 = current2;
-            current2 = current2.next;
-        }
- 
-        return -1;
-    }
- 
-    int getCount(Node node)
-    {
-        Node current = node;
-        int count = 0;
- 
-        while (current != null) {
-            count++;
-            current = current.next;
-        }
- 
-        return count;
-    }
- 
 
 	public static void main(String[] args) {
 		IntersectionTwoLL list = new IntersectionTwoLL();
@@ -76,13 +35,14 @@ public class IntersectionTwoLL {
         list.head1.next = new Node(6);
         list.head1.next.next = new Node(9);
         list.head1.next.next.next = new Node(15);
-        list.head1.next.next.next.next = new Node(30);
 
         list.head2 = new Node(10);
-        list.head2.next = new Node(15);
+        list.head2.next = new Node(6);
         list.head2.next.next = new Node(30);
+        list.head2.next.next.next = new Node(40);
+        list.head2.next.next.next.next = new Node(50);
  
-        System.out.println("The node of intersection is " + list.getNode());
+        System.out.println("The node of intersection is " + list.intersection(head1,head2));
 
 	}
 
