@@ -14,18 +14,19 @@ public class RotateLinkedList {
 	}
 	
 	static void rotate(int k) {
-		if(k==0) return;
-		Node curr = head;
-		while(curr.next!=null) {
-			curr = curr.next;
-		}
-		curr.next = head;
-		curr = head;
-		for(int i=0;i<k-1;i++) {
-			curr = curr.next;
-		}
-		head = curr.next;
-		curr.next = null;
+		if(k==0 || head==null || head.next==null) return ;
+        Node curr = head;
+        int length=1;
+        while(curr.next!=null){
+            length++;
+            curr = curr.next;
+        }
+        curr.next = head;
+        k = length-k%length;
+        while(k-->0) curr = curr.next;
+        head = curr.next;
+        curr.next = null;
+        
 	}
 	static void push(int new_data)
 	{
@@ -44,12 +45,12 @@ public class RotateLinkedList {
 	}
 	public static void main(String[] args) {
 		RotateLinkedList list = new RotateLinkedList();
-		for (int i = 60; i > 0; i -= 10)
+		for (int i = 5;i>0;i--)
 	        push( i);
 	 
 	    System.out.print("Given linked list \n");
 	    printList(head);
-	    rotate( 4);
+	    rotate( 2);
 	 
 	    System.out.print("\nRotated Linked list \n");
 	    printList(head);
