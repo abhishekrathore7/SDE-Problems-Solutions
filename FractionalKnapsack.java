@@ -1,66 +1,46 @@
 package sdeProblems;
 import java.util.*;
 
+class item{
+	int val,W;
+	item(int x,int y){
+		this.val = x;
+		this.W = y;
+	}
+}
+
+class ItemComp implements Comparator<item>{
+	@Override
+	public int compare(item a,item b) {
+		double r1 = (double)(a.val)/ (double)(a.W);
+		double r2 = (double)(b.val)/ (double)(b.W);
+		if(r1<r2) return 1;
+		else if(r1>r2) return -1;
+		else return 0;
+	}
+}
 public class FractionalKnapsack {
-	static double maxValue(int wt[],int val[],int W) {
-		Item[] ival = new Item[wt.length];
-		for(int i=0;i<wt.length;i++) {
-			ival[i] = new Item(wt[i],val[i],i);
+	static double maxValue(int W,item arr[],int n) {
+	Arrays.sort(arr, new ItemComp());
+	int currW = 0;
+	double finalValue = 0.0;
+	for(int i=0;i<n;i++) {
+		if(currW + arr[i].W <= W) {
+			currW += arr[i].W;
+			finalValue += arr[i].val;
 		}
-		Arrays.sort(ival, new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2)
-            {
-                return o2.cost.compareTo(o1.cost);
-            }
-        });
-		double totalValue = 0d;
-		 
-        for (Item i : ival) {
- 
-            int curWt = (int)i.wt;
-            int curVal = (int)i.val;
- 
-            if (W - curWt >= 0) {
-                W = W - curWt;
-                totalValue += curVal;
-            }
-            else {
-                double fraction
-                    = ((double)W / (double)curWt);
-                totalValue += (curVal * fraction);
-                W
-                    = (int)(W - (curWt * fraction));
-                break;
-            }
-        }
- 
-        return totalValue;
-		
+		else {
+			int remain = W - currW;
+			finalValue += ((double)arr[i].val / (double)arr[i].W) * (double)remain;
+			break;
+		}
 	}
+	return finalValue;
 	
-	static class Item{
-		Double cost;
-		double wt,val,W;
-		@SuppressWarnings("deprecation")
-		Item(int wt,int val,int W){
-			this.wt = wt;
-			this.val = val;
-			this.W = W;
-			cost = new Double((double)val / (double)wt);
-		}
-	}
+}
 
 	public static void main(String[] args) {
-		 int[] wt = { 10, 40, 20, 30 };
-	        int[] val = { 60, 40, 100, 120 };
-	        int capacity = 50;
-	 
-	        double maxValue = maxValue(wt, val, capacity);
-	 
-	        // Function call
-	        System.out.println("Maximum value we can obtain = "
-	                           + maxValue);
+		   
 	}
 
 }
